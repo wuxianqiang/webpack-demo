@@ -1,12 +1,15 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   devServer: {
     // 静态文件根目录
@@ -14,6 +17,7 @@ module.exports = {
     port: 8080,
     host: 'localhost'
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -28,7 +32,23 @@ module.exports = {
               insertAt: 'top' // style 标签默认插入到尾部，配置参数来插入到头部
             }
           },
-          'css-loader'
+          'css-loader',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.less$/,
+        // css-loader 处理CSS引入路径
+        // style-loader 把CSS转换为JS代码，在执行的时候注入一个style标签
+        // 可以用use也可以用loader
+        use: [{ // 收集所有的CSS文件
+            loader: MiniCssExtractPlugin.loader, // css分离
+            options: {
+              insertAt: 'top' // style 标签默认插入到尾部，配置参数来插入到头部
+            }
+          },
+          'css-loader',
+          'less-loader'
         ]
       },
       {
@@ -37,11 +57,25 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 4096
+              limit: 4096,
+              outputPath: 'images', // 输出路径
+              publicPath: '/images' // 访问路径
             }
           }
         ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
       }
+    ]
+  },
+  optimization: {
+    minimizer: [
+      // new UglifyJsPlugin(),
+      //压缩css资源的
+      // new OptimizeCSSAssetsPlugin()
     ]
   },
   plugins: [
@@ -54,7 +88,7 @@ module.exports = {
       hash: true // 防止缓存的
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css'
+      filename: 'css/[name].css'
     })
   ]
 }

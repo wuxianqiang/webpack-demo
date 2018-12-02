@@ -1,6 +1,8 @@
 import { name } from './name'
 import './base.css'
 import avatar from './image/26681854.png'
+import './reset.less'
+// import './public.scss'
 
 document.querySelector('#root').innerHTML = name
 const AVATAR_URL = avatar // 相对于输出目录的跟路径

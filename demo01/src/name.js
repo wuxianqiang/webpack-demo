@@ -1,1 +1,1 @@
-export const name = 'hello world'
+export let name = 'hello world'

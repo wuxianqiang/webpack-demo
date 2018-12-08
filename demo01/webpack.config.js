@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/index.js',
@@ -17,7 +18,11 @@ module.exports = {
     port: 8080,
     host: 'localhost'
   },
-  devtool: 'source-map',
+  // 在开发模式才有，报错可以定位到源代码的位置
+  devtool: 'source-map', // 在单独文件中生成，可以映射到列
+  // devtool: 'cheap-module-source-map', // 在单独文件中生成，不可以映射到列
+  // devtool: 'eval-source-map', // 在同个文件中生成，可以映射到列
+  // devtool: 'cheap-module-eval-source-map', // 在同个文件中生成，可以映射到列
   module: {
     rules: [
       {
@@ -73,9 +78,9 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      // new UglifyJsPlugin(),
+      new UglifyJsPlugin(),
       //压缩css资源的
-      // new OptimizeCSSAssetsPlugin()
+      new OptimizeCSSAssetsPlugin()
     ]
   },
   plugins: [
@@ -89,6 +94,10 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css'
+    }),
+    // 全局引入，无须每个文件注册， 在所有的模块都相当与import _ from lodash
+    new webpack.ProvidePlugin({
+      _: 'lodash'
     })
   ]
 }

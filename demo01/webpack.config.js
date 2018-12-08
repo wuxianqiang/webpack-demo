@@ -18,7 +18,20 @@ module.exports = {
     // 静态文件根目录
     contentBase: './dist',
     port: 8080,
-    host: 'localhost'
+    host: 'localhost',
+    proxy: {
+      // http://localhost:3000/api/user
+      '/api': 'http://localhost:3000' // 请求/api 开头的将代理
+
+      // http://localhost:3000/user
+      // 重写请求路径
+      // 'api': {
+      //   target: 'http://localhost:3000',
+      //   pathRewrite: {
+      //     '^api': ''
+      //   }
+      // }
+    }
   },
   // 在开发模式才有，报错可以定位到源代码的位置
   devtool: 'source-map', // 在单独文件中生成，可以映射到列

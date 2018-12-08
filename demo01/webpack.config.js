@@ -15,6 +15,34 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/'
   },
+  resolve: { // resolve 解析
+    extensions: [".js", ".vue", ".json", ".css"],
+    // 别名可以加快文件查找速度
+    alias: {
+      components: path.resolve(__dirname, 'src/components')
+    },
+    // 默认情况下package.json 文件则按照文件中 main 字段的文件名来查找文件
+    // 模块的默认主文件是main
+    mainFields: [
+      'main'
+    ], // package 默认查找的文件
+    // 
+    // 当目录下没有 package.json 文件时，我们说会默认使用目录下的 index.js 这个文件，其实这个也是可以配置的
+    mainFiles: [
+      'index'
+    ],
+    // modules: [ // 所有的模块都在这里
+    //   path.resolve('node_modules'),
+    //   path.resolve('src/loaders')
+    // ],
+    // 寻找loader有单独的配置
+    // resolveLoader: {
+    //   modules: [
+    //     path.resolve('node_modules'),
+    //     path.resolve('src/loaders')
+    //   ]
+    // }
+  },
   devServer: {
     // 静态文件根目录
     contentBase: './dist',
@@ -61,6 +89,8 @@ module.exports = {
   //   aggregateTimeout: 500
   // },
   module: {
+    // 这个模块不要解析
+    noParse: /jquery|lodash/,
     rules: [
       {
         test: /\.css$/,
@@ -143,6 +173,14 @@ module.exports = {
         to: path.resolve(__dirname, 'dist/assets') // 拷贝到这个文件下
       }
     ]),
-    new CleanWebpackPlugin([path.resolve(__dirname, 'dist')]) // 打包前删除文件
+    new CleanWebpackPlugin([path.resolve(__dirname, 'dist')]), // 打包前删除文件
+    // 定义在模块中使用的全局变量
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(false), // 是否是生产环境
+      VERSION: '1+1'
+    }),
+    // 这是moment的一个语言包
+    // IgnorePlugin用于忽略某些特定的模块， 让 webpack 不把这些指定的模块打包进去
+    new webpack.IgnorePlugin(/^\.\/locale/,/moment$/)
   ]
 }

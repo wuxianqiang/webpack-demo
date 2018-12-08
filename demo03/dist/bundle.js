@@ -1,4 +1,3 @@
-var lib =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -87,14 +86,48 @@ var lib =
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/react-dom/index.js":
+/*!*********************************************************************************!*\
+  !*** delegated ./node_modules/react-dom/index.js from dll-reference _dll_react ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = (__webpack_require__(/*! dll-reference _dll_react */ \"dll-reference _dll_react\"))(\"./node_modules/react-dom/index.js\");\n\n//# sourceURL=webpack:///delegated_./node_modules/react-dom/index.js_from_dll-reference__dll_react?");
+
+/***/ }),
+
+/***/ "./node_modules/react/index.js":
+/*!*****************************************************************************!*\
+  !*** delegated ./node_modules/react/index.js from dll-reference _dll_react ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = (__webpack_require__(/*! dll-reference _dll_react */ \"dll-reference _dll_react\"))(\"./node_modules/react/index.js\");\n\n//# sourceURL=webpack:///delegated_./node_modules/react/index.js_from_dll-reference__dll_react?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n// module.exports = 'hello world'\n// console.log('hello world')\n\n\n\nfunction Home(params) {\n  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", null, \"Home\");\n}\n\nreact_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Home, null), document.querySelector('#root'));\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "dll-reference _dll_react":
+/*!*****************************!*\
+  !*** external "_dll_react" ***!
+  \*****************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("module.exports = 'hello world'\r\n\r\nconsole.log('hello world')\n\n//# sourceURL=webpack://lib/./src/index.js?");
+eval("module.exports = _dll_react;\n\n//# sourceURL=webpack:///external_%22_dll_react%22?");
 
 /***/ })
 

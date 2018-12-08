@@ -23,6 +23,9 @@ module.exports = {
   // devtool: 'cheap-module-source-map', // 在单独文件中生成，不可以映射到列
   // devtool: 'eval-source-map', // 在同个文件中生成，可以映射到列
   // devtool: 'cheap-module-eval-source-map', // 在同个文件中生成，可以映射到列
+  externals: {
+    jquery: 'jQuery' // 外部提供，不需要打包，比如说已经引入cdn,key是模块名，值就是真正运行的时候从window的哪个属性上取值
+  },
   module: {
     rules: [
       {

@@ -6,6 +6,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin') // 拷贝静态文件的，如assets 拷贝到dist 中
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const mock = require('./mock')
 
 module.exports = {
   entry: './src/index.js',
@@ -31,6 +32,17 @@ module.exports = {
       //     '^api': ''
       //   }
       // }
+      
+    },
+    before (app) {
+      // webpack-dev-server 内部用的也是express
+      mock(app)
+      // app.get('/api/user', (req, res) => {
+      //   res.send([{
+      //     id: 1,
+      //     name: 'hello world'
+      //   }])
+      // })
     }
   },
   // 在开发模式才有，报错可以定位到源代码的位置

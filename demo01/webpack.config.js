@@ -4,6 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin') // 拷贝静态文件的，如assets 拷贝到dist 中
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -26,6 +28,13 @@ module.exports = {
   externals: {
     jquery: 'jQuery' // 外部提供，不需要打包，比如说已经引入cdn,key是模块名，值就是真正运行的时候从window的哪个属性上取值
   },
+  // webpack-dev-server 已经做好了文件自动编译
+  // watch: true,
+  // watchOptions: {
+  //   exclude: /node_modules/,
+  //   poll: 1000,
+  //   aggregateTimeout: 500
+  // },
   module: {
     rules: [
       {
@@ -101,6 +110,14 @@ module.exports = {
     // 全局引入，无须每个文件注册， 在所有的模块都相当与import _ from lodash
     new webpack.ProvidePlugin({
       _: 'lodash'
-    })
+    }),
+    new webpack.BannerPlugin('wuxianqiang'), // 文件顶部的注释文字
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/assets'), // 从这个文件
+        to: path.resolve(__dirname, 'dist/assets') // 拷贝到这个文件下
+      }
+    ]),
+    new CleanWebpackPlugin([path.resolve(__dirname, 'dist')]) // 打包前删除文件
   ]
 }

@@ -1,5 +1,6 @@
 const path = require('path')
 const DllReferencePlugin = require('webpack/lib/DllReferencePlugin')
+const HappyPack = require('happypack')
 
 module.exports = {
   entry: './src/index.js',
@@ -17,8 +18,16 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: {
-          loader: 'babel-loader'
+        use: { // id为babel的进程处理
+          loader: 'happypack/loader?id=babel'
+        },
+        include: path.join(__dirname, 'src'),
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: { // id为css的进程处理
+          loader: 'happypack/loader?id=css'
         },
         include: path.join(__dirname, 'src'),
         exclude: /node_modules/
@@ -28,6 +37,18 @@ module.exports = {
   plugins: [
     new DllReferencePlugin({
       manifest: path.resolve(__dirname, 'dist/react.manifest.json')
+    }),
+
+    new HappyPack({
+      id: 'babel',
+      use: [{
+        loader: 'babel-loader'
+      }]
+    }),
+
+    new HappyPack({
+      id: 'css',
+      use: ['style-loader', 'css-loader']
     })
   ]
 }

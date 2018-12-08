@@ -8,7 +8,16 @@ const CopyWebpackPlugin = require('copy-webpack-plugin') // 拷贝静态文件�
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const mock = require('./mock')
 
-module.exports = {
+// env环境变量, argv命令行参数对象
+module.exports = (env, argv) => ({
+  optimization: {
+    minimizer: argv.mode === 'production' ? [
+      new UglifyJsPlugin(),
+      //压缩css资源的
+      new OptimizeCSSAssetsPlugin()
+    ] : []
+  },
+
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -143,13 +152,7 @@ module.exports = {
       }
     ]
   },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin(),
-      //压缩css资源的
-      new OptimizeCSSAssetsPlugin()
-    ]
-  },
+  
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -183,4 +186,4 @@ module.exports = {
     // IgnorePlugin用于忽略某些特定的模块， 让 webpack 不把这些指定的模块打包进去
     new webpack.IgnorePlugin(/^\.\/locale/,/moment$/)
   ]
-}
+})

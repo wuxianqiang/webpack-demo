@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode development",
-    "dev": "webpack-dev-server --mode development",
-    "dev:dll": "webpack --mode development --config react.webpack.config.js"
+    "dev": "webpack --mode development"
   },
   "keywords": [],
   "author": "",
